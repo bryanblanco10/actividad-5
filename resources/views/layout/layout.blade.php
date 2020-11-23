@@ -26,5 +26,7 @@
 	<script src='{{url("/Actividad1")}}/jquery/jquery-3.5.1.min.js'></script>
 	<script src='{{url("/Actividad1")}}/popper/popper.min.js'></script>
 	<script src='{{url("/Actividad1")}}/bootstrap/js/bootstrap.min.js'></script>
+
+	@yield('js')
 </body>
 </html>

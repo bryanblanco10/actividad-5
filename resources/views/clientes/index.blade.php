@@ -10,12 +10,12 @@
 						<strong>Clientes</strong>
 					</div>
 					<div class="card-body">	
-					<form method="GET" action="{{ route('clientes.show', $cliente->id) }}">
+					<form method="GET">
 						@csrf
 						<div class="form-group row">
 					    <label for="id" class="col-sm-4 col-form-label">Id</label>
 					    <div class="col-sm-8">
-					      <input type="number" class="form-control" id="id" name="id" value="{{$cliente->id}}">
+					      <input type="number" class="form-control" id="idcliente" name="idcliente" value="">
 					    </div>
 					  </div>
 					  <div class="form-group row">
@@ -43,28 +43,28 @@
 					  <div class="form-group row">
 					    <label for="id" class="col-sm-4 col-form-label">Identificación</label>
 					    <div class="col-sm-8">
-					      <input type="number" class="form-control" id="identification" name="identification" value="{{$cliente->identification}}">
+					      <input type="number" class="form-control" id="identification" name="identification" value="">
 					    </div>
 					  </div>
 					  <div class="form-group row">
 					    <label for="id" class="col-sm-4 col-form-label">Nombres</label>
 					    <div class="col-sm-8">
 					      <input type="text" class="form-control" id="names" name="names" 
-					      value="{{$cliente->names}}">
+					      value="">
 					    </div>
 					  </div>
 					  <div class="form-group row">
 					    <label for="id" class="col-sm-4 col-form-label">Apellidos</label>
 					    <div class="col-sm-8">
 					      <input type="text" class="form-control" id="surnames" name="surnames"
-					      value="{{$cliente->surnames}}">
+					      value="">
 					    </div>
 					  </div>
 					  <div class="form-group row">
 					    <label for="id" class="col-sm-4 col-form-label">Dirección</label>
 					    <div class="col-sm-8">
 					      <input type="text" class="form-control" id="address" name="address"
-					      	value="{{$cliente->address}}"
+					      	value=""
 					      >
 					    </div>
 					  </div>
@@ -72,21 +72,21 @@
 					    <label for="id" class="col-sm-4 col-form-label">Celular</label>
 					    <div class="col-sm-8">
 					      <input type="text" class="form-control" id="cell_phone" name="cell_phone"
-					      value="{{$cliente->cell_phone}}">
+					      value="">
 					    </div>
 					  </div>
 					  <div class="form-group row">
 					    <label for="id" class="col-sm-4 col-form-label">Email</label>
 					    <div class="col-sm-8">
 					      <input type="text" class="form-control" id="email" name="email"
-					      value="{{$cliente->email}}">
+					      value="">
 					    </div>
 					  </div>
 					  <div class="form-group row">
 					    <label for="id" class="col-sm-4 col-form-label">Fecha de nacimiento</label>
 					    <div class="col-sm-8">
 					      <input type="date" class="form-control" id="birth_date" name="birth_date"
-					      value="{{$cliente->birth_date}}">
+					      value="">
 					    </div>
 					  </div>
 					  <div class="form-group row">
@@ -113,20 +113,20 @@
                   name="biografia"
                   id="biografia" 
                   rows="5"
-                  value="{{$cliente->biografia}}"
+                  value=""
                 >
                 </textarea>
 					    </div>
 					  </div>
 					  <div class="row text-center mb-2">
               <div class="col-4">
-                <button type="submit" class="btn btn-dark btn-block">GUARDAR</button>
+                <button type="submit" class="btn btn-dark btn-block" id="guardar">GUARDAR</button>
               </div>
               <div class="col-4">
-                <button type="submit" class="btn btn-danger btn-block">EDITAR</button>
+                <button type="submit" class="btn btn-danger btn-block" id="editar">EDITAR</button>
               </div>
               <div class="col-4">
-                <button type="submit" class="btn btn-info btn-block">BUSCAR</button>
+                <button type="submit" class="btn btn-info btn-block" id="buscar">BUSCAR</button>
               </div>
             </div>
 					</form>
@@ -135,4 +135,54 @@
 			</div>
 		</div>
 	</section>
+@endsection
+
+@section('js')
+	<script>
+	
+	$('#buscar').on('click',function(e){
+		e.preventDefault()
+		const id = $('#idcliente').val()
+		if(id){
+			$.ajax({
+  				method: "GET",
+  				url: "http://127.0.0.1:8000/clientes/"+id
+			}).done(function(data) {
+  				console.log(data); 
+				$('#idcliente').val(data.id)
+				$('#identification').val(data.identification)
+				$('#names').val(data.names)
+			}).fail(function() {
+  				alert("Algo salió mal");
+			})
+		}else{
+			alert('Digite el id del usuario')
+		}
+	})
+
+	$('#guardar').on('click', function(e){
+		e.preventDefault()
+		if (validar()){
+			alert('todo bien')
+		}
+
+	})
+
+	function validar(){
+		const names = $('#names').val()
+		const identification = $('#identification').val()
+		if(!names){
+			alert('Falta el nombre')
+			return false;
+		}
+		if(!identification){
+			alert('Falta la identificacion')
+			return false
+		}
+
+		return true
+	}
+
+		
+	</script>
 @endsection

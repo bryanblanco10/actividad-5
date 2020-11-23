@@ -14,8 +14,9 @@ class ClienteController extends Controller
      */
     public function index()
     {
-      $clientes = Cliente::all();
-      return view('clientes.index', compact('clientes') );
+     // $clientes = Cliente::all();
+      //return response()->json($cliente);
+    //  return view('clientes.index', compact('clientes') );
     }
 
     /**
@@ -25,7 +26,7 @@ class ClienteController extends Controller
      */
     public function create()
     {
-        //
+        return view('clientes.index');
     }
 
     /**
@@ -45,10 +46,9 @@ class ClienteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Cliente $cliente)
     {
-      $cliente = Cliente::find($id);
-      return $cliente;
+        return response()->json($cliente);
     }
 
     /**

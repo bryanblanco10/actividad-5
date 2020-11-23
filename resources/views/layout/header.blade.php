@@ -18,6 +18,6 @@
       <a href="/">Inicio</a>
       <a href="/jugadores">Jugadores</a>
       <a href="/palmares">Palmares</a>
-      <a href="{{ route('clientes.index') }}">Clientes</a>
+      <a href="{{ route('clientes.create') }}">Clientes</a>
   </div>
 </div>
