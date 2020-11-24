@@ -1,5 +1,5 @@
 @extends('layout.layout')
-@section('title','Jugadores | Actividad N°1')
+@section('title','Jugadores | Actividad N°5')
 @section('content')
 	<section class="mt-4 mb-4">
 		<div class="container">

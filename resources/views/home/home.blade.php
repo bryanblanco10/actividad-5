@@ -1,5 +1,5 @@
 @extends('layout.layout')
-@section('title','Inicio | Actividad N°1')
+@section('title','Inicio | Actividad N°5')
 @section('content')
 	<!-- Slider -->
 	<section>
