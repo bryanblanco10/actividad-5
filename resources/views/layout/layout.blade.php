@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<title>@yield('title')</title>
 	<link rel="icon" href='{{url("/Actividad1")}}/img/logo.png' type="image/ico" />
 	<link
@@ -11,6 +12,7 @@
   />
 	<link rel="stylesheet" href='{{url("/Actividad1")}}/bootstrap/css/bootstrap.min.css'>
 	<link rel="stylesheet" href='{{url("/Actividad1")}}/css/styles.css'>
+	
 </head>
 <body>
 	<header class="header shadow">

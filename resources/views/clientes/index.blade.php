@@ -11,7 +11,6 @@
 					</div>
 					<div class="card-body">	
 					<form id="formulario">
-						@csrf
 						<div class="form-group row">
 					    <label for="id" class="col-sm-4 col-form-label">Id</label>
 					    <div class="col-sm-8">
@@ -143,14 +142,15 @@
 
 @section('js')
 	<script>
-	
-	$('#buscar').on('click',function(e){
+	$(document).ready(function(){
+		$('#buscar').on('click',function(e){
 		e.preventDefault()
 		const id = $('#idcliente').val()
 		if(id){
+			$.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
 			$.ajax({
-  				method: "GET",
-  				url: "http://127.0.0.1:8000/clientes/"+id
+  				type: "GET",
+  				url: "/clientes/"+id
 			}).done(function(data) {
   				console.log(data); 
 				$('#idcliente').val(data.id)
@@ -172,18 +172,83 @@
 	})
 
 	$('#guardar').on('click', function(e){
-		e.preventDefault()
+
+	e.preventDefault()
+		const type_identification = $('#type_identification').val()
+		const identification = $('#identification').val()
+		const names = $('#names').val()
+		const surnames = $('#surnames').val()
+		const address = $('#address').val()
+		const cell_phone = $('#cell_phone').val()
+		const email = $('#email').val()
+		const birth_date = $('#birth_date').val()
+		const biografia = $('#biografia').val()
+		//let token   = $('meta[name="csrf-token"]').attr('content');
+		//let dataString = 'type_identification='+type_identification+'&identification='+identification+'&names='+names+'&surnames='+surnames+'&address='+address+'&cell_phone='+cell_phone+'&email='+email+'&birth_date='+birth_date+'&biografia='+biografia
+		//console.log(dataString)
 		if (validar()){
+			$.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
 			$.ajax({
-  				method: "POST",
-  				url: "http://127.0.0.1:8000/clientes/"
-			}).done(function(data) {
+  				type: "POST",
+  				url: "/clientes",
+				data: {
+					type_identification: type_identification,
+					identification: identification,
+					names: names,
+					surnames: surnames,
+					address: address,
+					cell_phone: cell_phone,
+					email: email,
+					birth_date: birth_date,
+					biografia: biografia,
+				}
+			}).done(function(data) { 
   				console.log(data); 
-			}).fail(function() {
-  				alert("Algo salió mal");
+			}).fail(function(err) {
+  				console.log("Algo salió mal "+err);
 			})
-		}
+		} 
 	})
+
+$('#editar').on('click', function(e){
+
+	e.preventDefault()
+	const id = $('#idcliente').val()
+	const type_identification = $('#type_identification').val()
+	const identification = $('#identification').val()
+	const names = $('#names').val()
+	const surnames = $('#surnames').val()
+	const address = $('#address').val()
+	const cell_phone = $('#cell_phone').val()
+	const email = $('#email').val()
+	const birth_date = $('#birth_date').val()
+	const biografia = $('#biografia').val()
+
+	if (validar()){
+		$.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
+		$.ajax({
+			  type: "PUT",
+			  url: "/clientes/"+id,
+			data: {
+				type_identification: type_identification,
+				identification: identification,
+				names: names,
+				surnames: surnames,
+				address: address,
+				cell_phone: cell_phone,
+				email: email,
+				birth_date: birth_date,
+				biografia: biografia,
+			}
+		}).done(function(data) { 
+			  console.log(data); 
+		}).fail(function(err) {
+			  console.log("Algo salió mal "+err);
+		})
+	} 
+})
+
+})
 
 	function validar(){
 		const type_identification = $('#type_identification').val()

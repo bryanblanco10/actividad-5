@@ -19,6 +19,8 @@ class ClienteController extends Controller
 
     public function store(Request $request)
     {
+      //return response()->json($request);
+     // dd($request);
       $datos = Cliente::create(
         [
           'type_identification' => $request->type_identification,
@@ -29,6 +31,7 @@ class ClienteController extends Controller
           'cell_phone' => $request->cell_phone,
           'email' => $request->email,
           'birth_date' => $request->birth_date,
+          'activo' => '1',
           'biografia' => $request->biografia,
         ]
       );
@@ -49,9 +52,21 @@ class ClienteController extends Controller
         //
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Cliente $cliente)
     {
-        //
+      $cliente->type_identification = $request->type_identification;
+      $cliente->identification = $request->identification;
+      $cliente->names = $request->names;
+      $cliente->surnames = $request->surnames;
+      $cliente->address = $request->address;
+      $cliente->cell_phone = $request->cell_phone;
+      $cliente->email = $request->email;
+      $cliente->birth_date = $request->birth_date;
+      $cliente->biografia = $request->biografia;
+      $cliente->save();
+      return response()->json([
+        'mensaje' => 'Cliente actualizado con exito'
+      ]);
     }
 
     public function destroy($id)
